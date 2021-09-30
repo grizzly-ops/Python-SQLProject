@@ -1,0 +1,2 @@
+psycopg2-binary==2.8.5
+python-dotnev==0.13.0
