@@ -90,3 +90,46 @@ def get_watched_movies(username):
         with connection.cursor() as cursor:
             cursor.execute(SELECT_WATCHED_MOVIES, (username,))
             return cursor.fetchall()
+
+
+def add_user(username):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(INSERT_USER, (username,))
+
+
+def add_movie(title, release_timestamp):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(INSERT_MOVIES, (title, release_timestamp))
+
+
+def get_movies(upcoming=False):
+    with connection:
+        with connection.cursor() as cursor:
+            if upcoming:
+                today_timestamp = datetime.datetime.today().timestamp()
+                cursor.execute(SELECT_UPCOMING_MOVIES, (today_timestamp,))
+            else:
+                cursor.execute(SELECT_ALL_MOVIES)
+            return cursor.fetchall()
+
+
+def search_movies(search_term):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(SEARCH_MOVIES, (f"%{search_term}%",))
+            return cursor.fetchall()
+
+
+def watch_movie(username, movie_id):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(INSERT_WATCHED_MOVIE, (username, movie_id))
+
+
+def get_watched_movies(username):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(SELECT_WATCHED_MOVIES, (username,))
+            return cursor.fetchall()
